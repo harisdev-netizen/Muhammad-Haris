@@ -1,0 +1,75 @@
+{{ 'top-bar.css' | asset_url | stylesheet_tag }}
+
+<div class="top-bar">
+  <div class="page-width">
+    {% if section.settings.logo != blank or shop.name != blank %}
+      <button type="button" class="top-bar__mobile-trigger desktop-hide" aria-label="Toggle navigation">
+        {% render 'icon-hamburger' %}
+      </button>
+
+      <div class="top-bar__brand">
+        {% if section.settings.logo != blank %}
+          <a href="{{ routes.root_url }}">
+            {{ section.settings.logo | image_url: width: 153, height: 20 | image_tag }}
+          </a>
+        {% elsif shop.name != blank %}
+          <a href="{{ routes.root_url }}">
+            <h2>{{ shop.name }}</h2>
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if section.settings.navbar_text != blank %}
+      <div class="top-bar__message top-bar__hide-mobile">
+        {{ section.settings.navbar_text }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.button_link != blank and section.settings.button_label != blank %}
+      <div class="top-bar__action top-bar__hide-mobile">
+        <a href="{{ section.settings.button_link }}" class="top-bar__button">
+          <span>{{ section.settings.button_label }}</span>
+          {% render 'chevron-right', currentColor: 'black' %}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script src="{{ 'top-bar-trigger.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Top Bar",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "navbar_text",
+      "label": "Announcement Text",
+      "info": "If text is added it will be shown, if the field is blank the element will not be added"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Button"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Top Bar"
+    }
+  ]
+}
+{% endschema %}
