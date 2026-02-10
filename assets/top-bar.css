@@ -1,0 +1,141 @@
+:root {
+  --top-bar-bg: #f5f5f5;
+  --top-bar-button-bg: #fff544;
+}
+
+.top-bar {
+  position: relative;
+  padding: 10px 0;
+  background: var(--top-bar-bg);
+}
+
+.top-bar .page-width {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: unset;
+}
+
+.top-bar__brand a {
+  display: flex;
+  text-decoration: none;
+}
+
+.top-bar__brand h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: normal;
+  margin-block: 0;
+}
+
+.top-bar__message {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 13px;
+  letter-spacing: 0px;
+  color: #000000;
+}
+
+.top-bar__button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-decoration: none;
+  padding: 1rem 4rem;
+  text-transform: uppercase;
+  background: var(--top-bar-button-bg);
+  color: #000000;
+  border: 0.2rem solid transparent;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.top-bar__button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: #000000;
+  z-index: -1;
+  transition: width 0.4s ease;
+}
+
+.top-bar__button svg {
+  transition: transform 0.3s ease;
+}
+
+.top-bar__button:hover {
+  color: #ffffff;
+  border-color: #000000;
+}
+
+.top-bar__button:hover::before {
+  width: 100%;
+}
+
+.top-bar__button:hover svg {
+  transform: translateX(10px);
+}
+
+.top-bar__button:hover svg path {
+  fill: #ffffff;
+}
+
+.desktop-hide {
+  display: none;
+}
+
+.top-bar__mobile-trigger {
+  position: absolute;
+  left: 1.5rem;
+  top: 2rem;
+  width: 2rem;
+  height: 3rem;
+  z-index: 10;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.3s ease;
+}
+
+.top-bar__mobile-trigger:hover {
+  transform: scale(1.1);
+}
+
+.top-bar__mobile-trigger svg:nth-child(2) {
+  display: none;
+}
+
+.top-bar__mobile-trigger.active svg:nth-child(1) {
+  display: none;
+}
+
+.top-bar__mobile-trigger.active svg:nth-child(2) {
+  display: block;
+}
+
+/* Responsive Styles*/
+@media (max-width: 989px) {
+  .desktop-hide {
+    display: block;
+  }
+  .top-bar {
+    padding: 2rem 0;
+  }
+  .top-bar .page-width {
+    flex-flow: column wrap;
+    gap: 0;
+  }
+  .top-bar__hide-mobile {
+    height: 0;
+    overflow: hidden;
+    margin-top: 0;
+    transition: all 0.3s ease;
+  }
+}
