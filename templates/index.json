@@ -65,12 +65,12 @@
           "type": "Product",
           "settings": {
             "feature_product": "chequered-red-shirt",
-            "icon_top": 50,
-            "icon_left": 50,
-            "icon_size": 50,
+            "icon_top": 24,
+            "icon_left": 65,
+            "icon_size": 30,
             "icon_bg_color": "#ffffff",
             "icon_border_color": "#000000",
-            "icon_border_width": 2,
+            "icon_border_width": 0,
             "icon_plus_color": "#000000"
           }
         },
