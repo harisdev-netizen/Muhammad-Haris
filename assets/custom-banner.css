@@ -205,7 +205,7 @@
 
 .gift-guide__mobile-button-container {
   position: absolute;
-  top: 55%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: auto;
