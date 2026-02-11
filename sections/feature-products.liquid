@@ -1,0 +1,362 @@
+{{ 'feature-products.css' | asset_url | stylesheet_tag }}
+
+<div class="feature__products">
+  <div class="page-width">
+    {% if section.settings.title != blank %}
+      <h2 class="feature__products-title">{{ section.settings.title }}</h2>
+    {% endif %}
+    <div class="feature__products-col">
+      {% for block in section.blocks %}
+        {% assign product = block.settings.feature_product %}
+        {% assign product_index = forloop.index %}
+
+        <div class="feature__product" data-product-index="{{ product_index }}">
+          {% if product.featured_image != blank %}
+            {% assign icon_top = block.settings.icon_top | default: 50 %}
+            {% assign icon_left = block.settings.icon_left | default: 50 %}
+            {% assign icon_size = block.settings.icon_size | default: 50 %}
+            {% assign icon_bg_color = block.settings.icon_bg_color | default: '#ffffff' %}
+            {% assign icon_border_color = block.settings.icon_border_color | default: '#000000' %}
+            {% assign icon_plus_color = block.settings.icon_plus_color | default: '#000000' %}
+            {% assign icon_border_width = block.settings.icon_border_width | default: 2 %}
+            
+            <div class="feature__product-image-wrapper">
+              <img
+                src="{{ product.featured_image | image_url}}"
+                alt="{{ product.featured_image.alt }}"
+                width="100%"
+                height="100%"
+              >
+              <div 
+                class="feature__product-plus-icon" 
+                style="top: {{ icon_top }}%; left: {{ icon_left }}%; width: {{ icon_size }}px; height: {{ icon_size }}px;"
+              >
+                <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="50" r="48" fill="{{ icon_bg_color }}" stroke="{{ icon_border_color }}" stroke-width="{{ icon_border_width }}"/>
+                  <path d="M50 30V70M30 50H70" stroke="{{ icon_plus_color }}" stroke-width="4" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+          {% endif %}
+
+          <div class="feature__product-popup hidden">
+            <div class="feature__product-popup-cross">
+              <button type="button">
+                {% render 'cross' %}
+              </button>
+            </div>
+            
+            <div class="feature__product-popup-content">
+              <div class="feature__product-popup-iwt">
+                {% if product.featured_image != blank %}
+                  <div class="feature__product-popup-image">
+                    <img
+                      src="{{- product.featured_image | image_url: width: 400 }}"
+                      alt="{{ product.featured_image.alt }}"
+                      width="100%"
+                      height="100%"
+                      loading="lazy"
+                    >
+                  </div>
+                {% endif %}
+
+                <div class="feature__product-popup-text">
+                  {% if product.title != blank %}
+                    <h2>{{- product.title -}}</h2>
+                  {% endif %}
+
+                  <span class="feature__product-price">
+                    {{- product.selected_or_first_available_variant.price | money -}}
+                  </span>
+
+                  {% if product.description != blank %}
+                    <div class="feature__product-popup-desc">
+                      {{- product.description -}}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+
+              <form id="popup-form-{{ product_index }}" class="popup-form-atc" method="post" action="/cart/add">
+                {% if product.variants.size > 1 %}
+                  <div class="product-options">
+                    {% comment %} First render Color/Colour options {% endcomment %}
+                    {% for option in product.options_with_values %}
+                      {% if option.name == 'Color' or option.name == 'Colour' %}
+                        <fieldset class="product__legend-fieldset">
+                          <legend>{{ option.name }}</legend>
+                          <div class="product__radios-wrapper">
+                            {% for value in option.values %}
+                              <div class="product__radio product__radio--color">
+                                <input
+                                  type="radio"
+                                  id="{{ option.name | handleize }}-{{ value | handleize }}-{{ product_index }}"
+                                  name="options[{{ option.name }}]"
+                                  value="{{ value }}"
+                                  {% if forloop.first %}checked{% endif %}
+                                  data-option-position="{{ option.position }}"
+                                  data-option-name="{{ option.name }}"
+                                  data-option-value="{{ value }}"
+                                >
+                                <label for="{{ option.name | handleize }}-{{ value | handleize }}-{{ product_index }}" data-color="{{ value | handleize }}">
+                                  {{- value -}}
+                                </label>
+                              </div>
+                            {% endfor %}
+                          </div>
+                        </fieldset>
+                      {% endif %}
+                    {% endfor %}
+                    
+                    {% comment %} Then render Size as custom dropdown and other options as radio {% endcomment %}
+                    {% for option in product.options_with_values %}
+                      {% unless option.name == 'Color' or option.name == 'Colour' %}
+                        {% if option.name == 'Size' %}
+                          <fieldset class="product__legend-fieldset">
+                            <legend>{{ option.name }}</legend>
+                            <div class="product__radios-wrapper">
+                              <div class="custom-select-wrapper" data-option-position="{{ option.position }}" data-option-name="{{ option.name }}">
+                                <div class="custom-select-trigger">
+                                  <span class="custom-select-value">Choose your size</span>
+                                  <div class="custom-select-arrow">
+                                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <path d="M1 1L6 6L11 1" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                  </div>
+                                </div>
+                                <div class="custom-select-options">
+                                  {% for value in option.values %}
+                                    <div class="custom-select-option {% if forloop.first %}selected{% endif %}" data-value="{{ value }}">
+                                      {{ value }}
+                                    </div>
+                                  {% endfor %}
+                                </div>
+                                <input type="hidden" name="options[{{ option.name }}]" value="{{ option.values.first }}" data-option-position="{{ option.position }}" data-option-name="{{ option.name }}">
+                              </div>
+                            </div>
+                          </fieldset>
+                        {% else %}
+                          <fieldset class="product__legend-fieldset">
+                            <legend>{{ option.name }}</legend>
+                            <div class="product__radios-wrapper">
+                              {% for value in option.values %}
+                                <div class="product__radio">
+                                  <input
+                                    type="radio"
+                                    id="{{ option.name | handleize }}-{{ value | handleize }}-{{ product_index }}"
+                                    name="options[{{ option.name }}]"
+                                    value="{{ value }}"
+                                    {% if forloop.first %}checked{% endif %}
+                                    data-option-position="{{ option.position }}"
+                                    data-option-name="{{ option.name }}"
+                                    data-option-value="{{ value }}"
+                                  >
+                                  <label for="{{ option.name | handleize }}-{{ value | handleize }}-{{ product_index }}">
+                                    {{- value -}}
+                                  </label>
+                                </div>
+                              {% endfor %}
+                            </div>
+                          </fieldset>
+                        {% endif %}
+                      {% endunless %}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+
+                <input type="hidden" id="variant-id-{{ product_index }}" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+                <button class="add-to-cart-button" type="submit">
+                  <span>{{ 'products.product.add_to_cart' | t }}</span>
+                  {% render 'chevron-right', currentColor: 'white' %}
+                </button>
+                
+                <script type="application/json" id="product-variants-json-{{ product_index }}">
+                  {{ product.variants | json }}
+                </script>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="feature__product-popup-overflow"></div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const forms = document.querySelectorAll('[id^="popup-form-"]');
+    
+    forms.forEach(function (form) {
+      const formId = form.getAttribute('id').split('-').pop();
+      const variantIdInput = form.querySelector(`#variant-id-${formId}`);
+      const currentPrice = form.closest('.feature__product-popup').querySelector('.feature__product-price');
+      const productVariantsElement = document.getElementById(`product-variants-json-${formId}`);
+      let productVariants;
+
+      try {
+        productVariants = JSON.parse(productVariantsElement.textContent);
+      } catch (e) {
+        console.error('Error parsing product variants:', e);
+        return;
+      }
+
+      function getSelectedOptions() {
+        const selectedOptions = {};
+        const radios = form.querySelectorAll('input[type="radio"]:checked');
+        const hiddenInputs = form.querySelectorAll('input[type="hidden"][data-option-position]');
+        
+        radios.forEach((radio) => {
+          const position = radio.getAttribute('data-option-position');
+          selectedOptions[`option${position}`] = radio.value;
+        });
+        
+        hiddenInputs.forEach((input) => {
+          const position = input.getAttribute('data-option-position');
+          selectedOptions[`option${position}`] = input.value;
+        });
+        
+        return selectedOptions;
+      }
+
+      function findVariantId(selectedOptions) {
+        for (let i = 0; i < productVariants.length; i++) {
+          const variant = productVariants[i];
+          let match = true;
+          
+          if (selectedOptions.option1 && variant.option1 !== selectedOptions.option1) match = false;
+          if (selectedOptions.option2 && variant.option2 !== selectedOptions.option2) match = false;
+          if (selectedOptions.option3 && variant.option3 !== selectedOptions.option3) match = false;
+          
+          if (match) {
+            return { id: variant.id, price: variant.price };
+          }
+        }
+        return null;
+      }
+
+      function updateVariantId() {
+        const selectedOptions = getSelectedOptions();
+        const variantData = findVariantId(selectedOptions);
+
+        if (variantData) {
+          variantIdInput.value = variantData.id;
+          
+          if (typeof Shopify !== 'undefined' && Shopify.formatMoney) {
+            currentPrice.textContent = Shopify.formatMoney(variantData.price, window.theme.moneyFormat || '{{amount}}');
+          } else {
+            const formattedPrice = (variantData.price / 100).toFixed(2);
+            currentPrice.textContent = `$${formattedPrice}`;
+          }
+        }
+      }
+
+      form.addEventListener('change', function (event) {
+        if (event.target.type === 'radio' || event.target.type === 'hidden') {
+          updateVariantId();
+        }
+      });
+
+      updateVariantId();
+    });
+  });
+</script>
+
+<script src="{{ 'custom-atc.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Feature_Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "feature_product",
+          "label": "Product"
+        },
+        {
+          "type": "header",
+          "content": "Plus Icon Settings"
+        },
+        {
+          "type": "range",
+          "id": "icon_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Icon Position from Top",
+          "default": 50,
+          "info": "Adjust vertical position (0% = top edge, 100% = bottom edge)"
+        },
+        {
+          "type": "range",
+          "id": "icon_left",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Icon Position from Left",
+          "default": 50,
+          "info": "Adjust horizontal position (0% = left edge, 100% = right edge)"
+        },
+        {
+          "type": "range",
+          "id": "icon_size",
+          "min": 0,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "label": "Icon Size",
+          "default": 50
+        },
+        {
+          "type": "color",
+          "id": "icon_bg_color",
+          "label": "Icon Background Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "icon_border_color",
+          "label": "Icon Border Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "icon_border_width",
+          "min": 0,
+          "max": 5,
+          "step": 0.5,
+          "unit": "px",
+          "label": "Icon Border Width",
+          "default": 2
+        },
+        {
+          "type": "color",
+          "id": "icon_plus_color",
+          "label": "Icon Plus Symbol Color",
+          "default": "#000000"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feature Products"
+    }
+  ]
+}
+{% endschema %}

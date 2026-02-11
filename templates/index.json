@@ -32,38 +32,105 @@
         "image_mobile": "shopify://shop_images/Frame.svg"
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "feature_products_n9ytBy": {
+      "type": "feature-products",
+      "blocks": {
+        "product_A76WKB": {
+          "type": "Product",
+          "settings": {
+            "feature_product": "black-leather-bag",
+            "icon_top": 57,
+            "icon_left": 62,
+            "icon_size": 22,
+            "icon_bg_color": "#ffffff",
+            "icon_border_color": "#000000",
+            "icon_border_width": 0,
+            "icon_plus_color": "#000000"
+          }
+        },
+        "product_c3Nm9f": {
+          "type": "Product",
+          "settings": {
+            "feature_product": "blue-silk-tuxedo",
+            "icon_top": 50,
+            "icon_left": 85,
+            "icon_size": 22,
+            "icon_bg_color": "#ffffff",
+            "icon_border_color": "#000000",
+            "icon_border_width": 0,
+            "icon_plus_color": "#000000"
+          }
+        },
+        "product_d7jEqb": {
+          "type": "Product",
+          "settings": {
+            "feature_product": "chequered-red-shirt",
+            "icon_top": 24,
+            "icon_left": 65,
+            "icon_size": 22,
+            "icon_bg_color": "#ffffff",
+            "icon_border_color": "#000000",
+            "icon_border_width": 0,
+            "icon_plus_color": "#000000"
+          }
+        },
+        "product_heFXPi": {
+          "type": "Product",
+          "settings": {
+            "feature_product": "classic-leather-jacket",
+            "icon_top": 18,
+            "icon_left": 74,
+            "icon_size": 22,
+            "icon_bg_color": "#ffffff",
+            "icon_border_color": "#000000",
+            "icon_border_width": 0,
+            "icon_plus_color": "#000000"
+          }
+        },
+        "product_TPW4Wt": {
+          "type": "Product",
+          "settings": {
+            "feature_product": "classic-varsity-top",
+            "icon_top": 26,
+            "icon_left": 51,
+            "icon_size": 22,
+            "icon_bg_color": "#ffffff",
+            "icon_border_color": "#000000",
+            "icon_border_width": 0,
+            "icon_plus_color": "#000000"
+          }
+        },
+        "product_7GzDhM": {
+          "type": "Product",
+          "settings": {
+            "feature_product": "dark-denim-top",
+            "icon_top": 39,
+            "icon_left": 77,
+            "icon_size": 22,
+            "icon_bg_color": "#ffffff",
+            "icon_border_color": "#000000",
+            "icon_border_width": 0,
+            "icon_plus_color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "product_A76WKB",
+        "product_c3Nm9f",
+        "product_d7jEqb",
+        "product_heFXPi",
+        "product_TPW4Wt",
+        "product_7GzDhM"
+      ],
+      "name": "Feature Products",
       "settings": {
-        "collection": "all",
-        "products_to_show": 8,
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 4,
-        "enable_desktop_slider": false,
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "color_scheme": "scheme-1",
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 44,
-        "padding_bottom": 36
+        "title": "Tisso vison in the wild"
       }
     }
   },
   "order": [
     "top_bar_m4aEFx",
     "custom_banner_cmtCmc",
-    "featured_collection"
+    "feature_products_n9ytBy"
   ]
 }

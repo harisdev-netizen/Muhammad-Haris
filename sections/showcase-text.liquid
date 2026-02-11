@@ -1,0 +1,29 @@
+{{ 'showcase-text.css' | asset_url | stylesheet_tag }}
+
+<div class="showcase__text">
+  <div class="page-width">
+    {% if section.settings.title != blank %}
+      <div class="showcase__text-title">
+        {{section.settings.title}}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Showcase Text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Showcase Text"
+    }
+  ]
+}
+{% endschema %}
