@@ -17,7 +17,7 @@
 .feature__products-col {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
+  gap: 20px;
 }
 
 .feature__product {
