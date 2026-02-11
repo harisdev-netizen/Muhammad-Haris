@@ -32,6 +32,13 @@
         "image_mobile": "shopify://shop_images/Frame.svg"
       }
     },
+    "showcase_text_Pw39cP": {
+      "type": "showcase-text",
+      "name": "Showcase Text",
+      "settings": {
+        "title": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+      }
+    },
     "feature_products_n9ytBy": {
       "type": "feature-products",
       "blocks": {
@@ -131,6 +138,7 @@
   "order": [
     "top_bar_m4aEFx",
     "custom_banner_cmtCmc",
+    "showcase_text_Pw39cP",
     "feature_products_n9ytBy"
   ]
 }
