@@ -99,6 +99,19 @@
             "icon_border_width": 2,
             "icon_plus_color": "#000000"
           }
+        },
+        "product_7GzDhM": {
+          "type": "Product",
+          "settings": {
+            "feature_product": "dark-denim-top",
+            "icon_top": 50,
+            "icon_left": 50,
+            "icon_size": 50,
+            "icon_bg_color": "#ffffff",
+            "icon_border_color": "#000000",
+            "icon_border_width": 2,
+            "icon_plus_color": "#000000"
+          }
         }
       },
       "block_order": [
@@ -106,7 +119,8 @@
         "product_c3Nm9f",
         "product_d7jEqb",
         "product_heFXPi",
-        "product_TPW4Wt"
+        "product_TPW4Wt",
+        "product_7GzDhM"
       ],
       "name": "Feature Products",
       "settings": {
